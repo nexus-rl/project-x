@@ -10,6 +10,8 @@ from distrib_rl.PolicyOptimization.DistribPolicyGradients import Server
 from distrib_rl.Experiments import ExperimentManager
 import traceback
 
+from project_x.register_customizations import register_customizations
+
 def main():
     if len(sys.argv) == 1:
         experiment_path = "resources/experiments/test_experiments/walker2d_config.json"
@@ -18,6 +20,7 @@ def main():
         if not os.path.exists(experiment_path):
             raise FileNotFoundError(f"No experiment file found at location '{experiment_path}'")
 
+    register_customizations()
     server = Server()
     experiment_manager = ExperimentManager(server)
     experiment_manager.load_experiment(experiment_path)

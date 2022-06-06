@@ -10,8 +10,11 @@ print("SET TORCH TO 1 THREAD IN RUN_CLIENT")
 torch.set_num_threads(1)
 
 from distrib_rl.PolicyOptimization.DistribPolicyGradients import Client
+from project_x.register_customizations import register_customizations
 
 def main():
+    register_customizations()
+
     client = Client()
     client.configure()
 
