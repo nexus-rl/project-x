@@ -1,9 +1,14 @@
 {
   "device": "cuda:0",
   "seed": 123,
-  "log_to_wandb": true,
   "env_id": "Rocket League",
   "agent": {"type" : "marl"},
+  "log_to_wandb": true,
+  "wandb": {
+    "project": "project-x",
+    "group": "server_performance_testing",
+    "name": "no stacking"
+  },
 
   "value_estimator":
   {
@@ -21,28 +26,28 @@
       "ff1":
       {
         "type" : "ff",
-        "num_nodes" : 128,
+        "num_nodes" : 256,
         "activation_function" : "selu",
         "extra" : null
       },
       "ff2":
       {
         "type" : "ff",
-        "num_nodes" : 128,
+        "num_nodes" : 256,
         "activation_function" : "selu",
         "extra" : null
       },
       "ff3":
       {
         "type" : "ff",
-        "num_nodes" : 128,
+        "num_nodes" : 256,
         "activation_function" : "selu",
         "extra" : null
       },
       "ff4":
       {
         "type" : "ff",
-        "num_nodes" : 128,
+        "num_nodes" : 256,
         "activation_function" : "selu",
         "extra" : null
       },
@@ -54,7 +59,6 @@
       }
     }
   },
-
   "policy":
   {
     "type" : ["ff", "discrete"],
@@ -68,28 +72,28 @@
       "ff1":
       {
         "type" : "ff",
-        "num_nodes" : 256,
+        "num_nodes" : 128,
         "activation_function" : "selu",
         "extra" : null
       },
       "ff2":
       {
         "type" : "ff",
-        "num_nodes" : 256,
+        "num_nodes" : 128,
         "activation_function" : "selu",
         "extra" : null
       },
       "ff3":
       {
         "type" : "ff",
-        "num_nodes" : 256,
+        "num_nodes" : 128,
         "activation_function" : "selu",
         "extra" : null
       },
       "ff4":
       {
         "type" : "ff",
-        "num_nodes" : 256,
+        "num_nodes" : 128,
         "activation_function" : "selu",
         "extra" : null
       },
@@ -125,7 +129,7 @@
   "policy_optimizer":
   {
     "type": "pg",
-    "gamma": 0.99,
+    "gamma": 0.995,
     "max_kl": 1.0,
     "n_epochs": 10,
     "batch_size": 100000, // no minibatches, so must fit in VRAM
@@ -133,7 +137,7 @@
     "gae_lambda": 0.95, // should be slightly smaller than gamma
     "entropy_coef": 0.005,
     "max_timesteps": 1e16,
-    "eps_per_eval": 5,
+    "eps_per_eval": 50,
     /**
      * Percentage of returns that needs to be "fresh" prior to an update
      * occurring
@@ -169,19 +173,9 @@
     "tick_skip": 8,
     "team_size": 2,
     "game_speed": 100,
-    "self_play": true,
-    "spawn_opponents": false,
+    "spawn_opponents": true,
     "action_parser": "necto",
-    "obs_builder": {
-      "general_stacker": {
-        "stack_size": 5,
-        "obs": {
-          "default_with_timeouts": {
-            "n_players": 4 // 2v2 only
-          }
-        }
-      }
-    },
+    "obs_builder": "default_with_timeouts",
     "state_setter": "default",
     "rewards": {
       "combined": {
@@ -189,18 +183,26 @@
           "velocity_ball_to_goal",
           "velocity_player_to_ball",
           {
+            "jump_touch": {
+              "exp": 5,
+              "min_height": 250
+            }
+          },
+          {
             "event": {
-              "goal": 0.0,
+              "goal": 100.0,
               "concede": -100.0,
               "team_goal": 100.0,
-              "touch": 1.0,
-              "shot": 25.0,
-              "save": 25.0,
-              "demo": 25.0
+              "touch": 0.5,
+              "shot": 50.0,
+              "save": 50.0,
+              "demo": 25.0,
+              "boost_pickup": 0.1
             }
           }
         ],
         "weights":[
+          5.0,
           1.0,
           1.0,
           1.0
