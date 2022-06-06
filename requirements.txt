@@ -1,2 +1,2 @@
-git+https://github.com/some-rando-rl/distrib-rl.git@1e734f8149b7efef40dda3b4a412b9a561237f2d
+git+https://github.com/some-rando-rl/distrib-rl.git@b25e455675870fe597a5072c0b446fbb282a7195
 protobuf==3.20.1
