@@ -1,5 +1,9 @@
 from argparse import Action
+
+from numpy import arange
 from project_x.obs.DefaultWithTimeoutsObsBuilder import DefaultWithTimeoutsObsBuilder
+from project_x.rewards.LogCombinedReward import LogCombinedReward
+from project_x.rewards.LogEventReward import LogEventReward
 from distrib_rl.Environments.Custom.RocketLeague import ActionParserFactory, \
     ObsBuilderFactory, RewardFunctionFactory, StateSetterFactory, \
     TerminalConditionsFactory
@@ -13,6 +17,10 @@ def register_custom_obs_builders():
     ObsBuilderFactory.register_obs_builder("default_with_timeouts", DefaultWithTimeoutsObsBuilder)
 
 def register_custom_reward_functions():
+    log_combine_args_transformer = RewardFunctionFactory._arg_transformers["combined"]
+    RewardFunctionFactory.register_reward_function("log_combined", LogCombinedReward, args_transformer=log_combine_args_transformer)
+    RewardFunctionFactory.register_reward_function("log_event", LogEventReward)
+    # example reward function registration:
     # example reward function registration:
     # RewardFunctionFactory.register_reward_function("custom_reward_function", CustomRewardFunction)
     pass
