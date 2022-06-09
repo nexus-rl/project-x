@@ -1,6 +1,4 @@
 from argparse import Action
-
-from numpy import arange
 from project_x.obs.DefaultWithTimeoutsObsBuilder import DefaultWithTimeoutsObsBuilder
 from project_x.rewards.LogCombinedReward import LogCombinedReward
 from project_x.rewards.LogEventReward import LogEventReward
