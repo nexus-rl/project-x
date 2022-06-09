@@ -18,10 +18,6 @@ def register_custom_reward_functions():
     log_combine_args_transformer = RewardFunctionFactory._arg_transformers["combined"]
     RewardFunctionFactory.register_reward_function("log_combined", LogCombinedReward, args_transformer=log_combine_args_transformer)
     RewardFunctionFactory.register_reward_function("log_event", LogEventReward)
-    # example reward function registration:
-    # example reward function registration:
-    # RewardFunctionFactory.register_reward_function("custom_reward_function", CustomRewardFunction)
-    pass
 
 def register_custom_state_setters():
     # example state setter registration:
