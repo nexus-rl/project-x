@@ -32,9 +32,12 @@ class LogEventReward(EventReward):
 
         if self.extra_logger is not None:
             new_events = np.where(diff_values > 0)[0]
+            multi_log = {}
             for i_event in new_events:
                 event_name = self.names[i_event]
-                self.extra_logger.log(event_name, 1)
+                multi_log[event_name] = 1
+            
+            self.extra_logger.log_multi(multi_log)
 
         reward = np.dot(self.weights, diff_values)
 

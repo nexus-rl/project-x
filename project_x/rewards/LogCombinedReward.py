@@ -53,9 +53,12 @@ class LogCombinedReward(CombinedReward):
             weighted_rewards += [reward]
         
         if self.extra_logger is not None:
+            multi_log = {}
             for w_r, reward_name in zip(weighted_rewards, self.reward_names):
                 # print(reward_name, w_r)
-                self.extra_logger.log(reward_name, w_r)
+                multi_log[reward_name] = w_r
+
+            self.extra_logger.log_multi(multi_log)
 
         return np.sum(weighted_rewards)
 

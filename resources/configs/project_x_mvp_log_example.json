@@ -3,11 +3,11 @@
   "seed": 123,
   "env_id": "Rocket League",
   "agent": {"type" : "marl"},
-  "log_to_wandb": false,
+  "log_to_wandb": true,
   "wandb": {
     "project": "project-x",
-    "group": "server_performance_testing",
-    "name": "no stacking"
+    "group": "dev",
+    "name": "extra_logging_example"
   },
 
   "value_estimator":
@@ -221,26 +221,32 @@
   },
 
   
-  "extra_logging": {
-    "VelocityBallToGoalReward": { "agg": "rms" },
-    "VelocityPlayerToBallReward": { "agg": "rms" },
-    "JumpTouchReward": { },
-    "LogEventReward": { },
-    "goal": { "inv_per": "steps" }, 
-    "team_goal": { "inv_per": "steps" }, 
-    "concede": { "inv_per": "steps" }, 
-    "touch": { "inv_per": "steps" }, 
-    "shot": { "inv_per": "steps" }, 
-    "save": { "inv_per": "steps" }, 
-    "demo": { "inv_per": "steps" }, 
-    "boost_pickup": { "inv_per": "steps" }
+  "extra_log": { 
+    "rounds_per_aggregate": 60,    // Right now, aggregation step is in MARLAgent, right before experience send
+                                   // wait N rounds before aggregating log values and sending
+    "log_to_csv": false,
+    "wandb_via_redis": true,
+    "values": {
+      "VelocityBallToGoalReward": { "agg": "rms" },
+      "VelocityPlayerToBallReward": { "agg": "rms" },
+      "JumpTouchReward": { },
+      "LogEventReward": { "agg": "rms" },
+      "touch": { "agg": "mean_per", "per": "steps" }, 
+      "boost_pickup": { "agg": "mean_per", "per": "steps" },
+      "JumpTouch": { "agg": "mean_per", "per": "steps" },
+      "JumpTouch_norm_height": { },
+      "goal": { "agg": "mean_per", "per": "steps" }, 
+      "shot": { "agg": "mean_per", "per": "steps" }, 
+      "save": { "agg": "mean_per", "per": "steps" }, 
+      "demo": { "agg": "mean_per", "per": "steps" }, 
+    }
   },
 
   "lr_adjuster":
   {
     "clip_target": 0.1,
     "rate": 1.1,
-    "max_lr": 1,
+    "max_lr": 1.0,
     "min_lr": 1e-7
   }
 }
