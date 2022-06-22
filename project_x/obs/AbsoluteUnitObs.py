@@ -180,7 +180,7 @@ class AbsoluteUnitObs(DefaultWithTimeoutsObsBuilder):
         protecc_xy = np.broadcast_to(ball_to_goals[1, :, :2], (self.n_players, 2, 2))
         # -> (players, 2)
         attacc_theta = self._angle_between(ptb_xy, attacc_xy)
-        protecc_theta = self._angle_between(ptb_xy, protecc_xy)
+        protecc_theta = self._angle_between(ptb_xy, -protecc_xy)
         # -> (ab), (cos,sin), (players), (inv)
         attacc_protecc_align = np.stack([
             [np.cos(attacc_theta), np.sin(attacc_theta)],
@@ -341,14 +341,14 @@ class AbsoluteUnitObs(DefaultWithTimeoutsObsBuilder):
 
             if self.extra_logger is not None:
                 multi_logs += [ {
-                    "car_speed": vec_norm[i_vp, i_inv, 0]/self.LIN_NORM,
+                    "car_speed": vec_norm[i_vp, i_inv, 1]/self.LIN_NORM,
                     "car_height": p.car_data.position[2],
                     "touch_grass": float(p.on_ground),
                     "boost_held": float(p.boost_amount),
                     "dist_to_ball": vec_cmp_norm[0, i_vp, i_inv, 0]/self.LIN_NORM,
                     "speed_to_ball": vec_cmp_norm[0, i_vp, i_inv, 1]/self.LIN_NORM,
                     "face_ball": face_ball[0, i_p, i_inv],
-                    "ball_goal_align": attacc_protecc_align[0, 0, i_p, i_inv] + attacc_protecc_align[1, 0, i_p, i_inv]
+                    "ball_goal_align": 0.5*attacc_protecc_align[0, 0, i_p, i_inv] + 0.5*attacc_protecc_align[1, 0, i_p, i_inv]
                 } ]
         
         if self.extra_logger is not None:
