@@ -1,5 +1,6 @@
 from argparse import Action
 from project_x.obs.DefaultWithTimeoutsObsBuilder import DefaultWithTimeoutsObsBuilder
+from project_x.obs.AbsoluteUnitObs import AbsoluteUnitObs
 from project_x.rewards.LogCombinedReward import LogCombinedReward
 from project_x.rewards.LogEventReward import LogEventReward
 from project_x.rewards.LogJumpTouchReward import LogJumpTouchReward
@@ -16,6 +17,7 @@ def register_custom_action_parsers():
 
 def register_custom_obs_builders():
     ObsBuilderFactory.register_obs_builder("default_with_timeouts", DefaultWithTimeoutsObsBuilder)
+    ObsBuilderFactory.register_obs_builder("absolute_unit_obs", AbsoluteUnitObs)
 
 def register_custom_reward_functions():
     log_combine_args_transformer = RewardFunctionFactory._arg_transformers["combined"]

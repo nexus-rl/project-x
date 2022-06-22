@@ -1,0 +1,25 @@
+{
+  "experiment_name" : "WaddlesMVP_v1.2",
+  // "config_file" : "waddlesMVP_v1.3_absolute_unit.json",
+  // "config_file" : "waddlesMVP_v1.31_abs_tweak_hyper.json",
+  "config_file" : "waddlesMVP_v1.32_abs_yolo_weights.json",
+  "num_trials_per_adjustment" : 10,
+  "steps_per_save" : 100,
+
+  "config_adjustments" :
+  {
+    "adjustment_1":
+    {
+      "key_set": ["policy_optimizer", "batch_size"],
+      "range": {"begin": 100000, "end": 200000, "increment": 0},
+      "full_reset_per_increment": false
+    }
+  },
+
+  "terminal_conditions":
+  {
+    "max_epoch" : -100,
+    "max_timesteps" : 9999999999999,
+    "policy_reward" : -1
+  }
+}
