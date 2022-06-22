@@ -1,5 +1,10 @@
 from argparse import Action
 from project_x.obs.DefaultWithTimeoutsObsBuilder import DefaultWithTimeoutsObsBuilder
+from project_x.rewards.LogCombinedReward import LogCombinedReward
+from project_x.rewards.LogEventReward import LogEventReward
+from project_x.rewards.LogJumpTouchReward import LogJumpTouchReward
+from project_x.rewards.LogTouchHeightReward import LogTouchHeightReward
+
 from distrib_rl.Environments.Custom.RocketLeague import ActionParserFactory, \
     ObsBuilderFactory, RewardFunctionFactory, StateSetterFactory, \
     TerminalConditionsFactory
@@ -13,9 +18,11 @@ def register_custom_obs_builders():
     ObsBuilderFactory.register_obs_builder("default_with_timeouts", DefaultWithTimeoutsObsBuilder)
 
 def register_custom_reward_functions():
-    # example reward function registration:
-    # RewardFunctionFactory.register_reward_function("custom_reward_function", CustomRewardFunction)
-    pass
+    log_combine_args_transformer = RewardFunctionFactory._arg_transformers["combined"]
+    RewardFunctionFactory.register_reward_function("log_combined", LogCombinedReward, args_transformer=log_combine_args_transformer)
+    RewardFunctionFactory.register_reward_function("log_event", LogEventReward)
+    RewardFunctionFactory.register_reward_function("log_jump_touch", LogJumpTouchReward)
+    RewardFunctionFactory.register_reward_function("log_touch_height", LogTouchHeightReward)
 
 def register_custom_state_setters():
     # example state setter registration:
