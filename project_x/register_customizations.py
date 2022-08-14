@@ -6,7 +6,7 @@ from project_x.rewards.LogEventReward import LogEventReward
 from project_x.rewards.LogJumpTouchReward import LogJumpTouchReward
 from project_x.rewards.LogTouchHeightReward import LogTouchHeightReward
 
-from distrib_rl.Environments.Custom.RocketLeague import ActionParserFactory, \
+from rlgym_distrib_rl_wrapper import ActionParserFactory, \
     ObsBuilderFactory, RewardFunctionFactory, StateSetterFactory, \
     TerminalConditionsFactory
 

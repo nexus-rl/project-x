@@ -1,7 +1,7 @@
 {
   "device": "cuda:0",
   "seed": 123,
-  "env_id": "Rocket League",
+  "env_id": "RocketLeague-v0",
   "agent": {"type" : "marl"},
   "log_to_wandb": true,
   "wandb": {
@@ -169,7 +169,7 @@
     "fd_noise_std" : 0.1
   },
 
-  "rlgym": {
+  "env_kwargs": {
     "tick_skip": 8,
     "team_size": 2,
     "game_speed": 100,
@@ -177,7 +177,7 @@
     "action_parser": "necto",
     "obs_builder": "default_with_timeouts",
     "state_setter": "default",
-    "rewards": {
+    "reward_function": {
       "combined": {
         "rewards": [
           "velocity_ball_to_goal",
